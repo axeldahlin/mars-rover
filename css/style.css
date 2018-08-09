@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url(../images/background.jpg);
+}
+
+#canvas-div {
+    height: 100vh;
+    text-align: center;
+
+}
+
+#canvas {
+    border: black 2px solid;
+
+}

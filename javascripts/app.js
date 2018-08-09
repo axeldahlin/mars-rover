@@ -6,11 +6,22 @@ let rover = {
   y: 0,
   travelLog: []
 };
+// Map Goes Here
+// ======================
+const map = [
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+];
 
 // ======================
-
-
-
 function turnLeft(rover){
   console.log("turnLeft was called!");
   switch(rover.direction) {
@@ -26,8 +37,6 @@ function turnLeft(rover){
     case 'W':
       rover.direction = 'S';
       break;
-    default:
-        console.log('That is not a valid command.')
   }
   console.log(`Direction: ${rover.direction}`);
 }
@@ -47,105 +56,95 @@ function turnRight(rover){
     case 'W':
       rover.direction = 'N';
       break;
-    default:
-        console.log('That is not a valid command.')
   }
   console.log(`Direction: ${rover.direction}`);
   
 }
 
+
+let positiveDirection;
+let axis;
+
+function checkMap (axis, direction) {
+  if (typeof map[rover.x][rover.y] === 'undefined') {
+    console.log('End of map. Can not move that way.');
+    if (positiveDirection) {
+      rover[axis]--;
+    } else {
+      rover[axis]++;
+    }
+  }
+}
+
 function moveForward(rover){
   console.log("moveForward was called")
+
   switch(rover.direction) {
     case 'N':
-      if (rover.y === 0) {
-        console.log('End of map. Can not move that way.');
-        break;
-      } else {
-        rover.y--;
-      }
+      rover.y--;
+      positiveDirection = false;
+      axis = 'y';
+      checkMap(axis, positiveDirection);
       break;
     case 'E':
-      if (rover.x === 10) {
-        console.log('End of map. Can not move that way.');
-        break;
-      } else {
-        rover.x++;
-      }
+      rover.x++;
+      positiveDirection = true;
+      axis = 'x';
+      checkMap(axis, positiveDirection);
       break;
     case 'S':
-      if (rover.y === 10) {
-        console.log('End of map. Can not move that way.');
-        break;
-      } else {
-        rover.y++;
-      }
+      rover.y++;
+      positiveDirection = true;
+      axis = 'y';
+      checkMap(axis, positiveDirection);
       break;
     case 'W':
-      if (rover.x === 0) {
-        console.log('End of map. Can not move that way.');
-        break;
-        } else {
-          rover.x--;
-        }
+      rover.x--;
+      positiveDirection = false;
+      axis = 'x';
+      checkMap(axis, positiveDirection);
       break;
     }
-
     console.log(`X:${rover.x}, Y:${rover.y}`);
     rover.travelLog.push({x: rover.x, y: rover.y});
+    drawBoard(squareSide);
 }
 
 function moveBackward(rover){
   console.log("moveBackward was called")
   switch(rover.direction) {
     case 'N':
-      if (rover.y === 10) {
-        console.log('End of map. Can not move that way.');
-        break;
-      } else {
-        rover.y++;
-      }
+      rover.y++;
+      positiveDirection = true;
+      axis = 'y';
+      checkMap(axis, positiveDirection);
       break;
     case 'E':
-      if (rover.x === 0) {
-        console.log('End of map. Can not move that way.');
-        break;
-      } else {
-        rover.x--;
-      }
+      rover--;
+      positiveDirection = false;
+      axis = 'x';
+      checkMap(axis, positiveDirection);
       break;
     case 'S':
-      if (rover.y === 0) {
-        console.log('End of map. Can not move that way.');
-        break;
-      } else {
-        rover.y--;
-      }
+      rover.y--;
+      positiveDirection = false;
+      axis = 'y';
+      checkMap(axis, positiveDirection);
       break;
     case 'W':
-      if (rover.x === 10) {
-        console.log('End of map. Can not move that way.');
-        break;
-        } else {
-          rover.x++;
-        }
+      rover.x++;
+      positiveDirection = true;
+      axis = 'x';
+      checkMap(axis, positiveDirection);
       break;
     }
-
     console.log(`X:${rover.x}, Y:${rover.y}`);
     rover.travelLog.push({x: rover.x, y: rover.y});
+
+    drawBoard(squareSide);
 }
 
-
-
-
 function handleCommands(commands) {
-  for (let i = 0; i < commands.length; i++) { 
-    if(string.indexOf() !== -1;)
-
-  }
-  
-
   for (let i = 0; i < commands.length; i++) {
     switch(commands[i]) {
       case 'l':
@@ -160,10 +159,17 @@ function handleCommands(commands) {
       case 'b':
         moveBackward(rover);
         break;
-      default:  
-        console.log('That is an invalid command.');
     }
   }
   console.log(rover.travelLog);
+}
+
+function validateCommand(command) {
+  var patt = /[^f|b|l|r]/i;
+  if (!patt.test(command)) {
+      handleCommands(command);
+  } else {
+      console.log('That is invalid command.')
+  }
 }
 
