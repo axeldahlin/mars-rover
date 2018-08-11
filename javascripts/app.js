@@ -6,20 +6,25 @@ let rover = {
   y: 0,
   travelLog: []
 };
+
+
 // Map Goes Here
 // ======================
 const map = [
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', 'X', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+  ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_']
 ];
+
+
+
 
 // ======================
 function turnLeft(rover){
@@ -62,86 +67,118 @@ function turnRight(rover){
 }
 
 
-let positiveDirection;
-let axis;
 
-function checkMap (axis, direction) {
-  if (typeof map[rover.x][rover.y] === 'undefined') {
-    console.log('End of map. Can not move that way.');
-    if (positiveDirection) {
-      rover[axis]--;
-    } else {
-      rover[axis]++;
-    }
+
+
+
+function checkEndOfMap(axis, moveDirectionIsNegative) {
+  if (moveDirectionIsNegative) {
+    if (rover[axis] - 1 < 0) {
+      console.log('End of map.');
+      return true;
+    } 
+
+  } else {
+    if (rover[axis] + 1 > 9) {
+      console.log('End of map.');
+      return true;
+    } 
+  }
+  return false;
+}
+
+function checkIfMoveIsFree(nextMove) {
+  console.log('NextMove: ' + nextMove);
+  if (nextMove === 'X') {
+    console.log('Obstcal in the way');
+    return false;
+  } else {
+    return true;
   }
 }
 
-function moveForward(rover){
-  console.log("moveForward was called")
 
+
+
+
+function moveForward(rover){
+  let nextMove;
+  let axis;
+  let moveDirectionIsNegative;
+  console.log("moveForward was called");
+  map[rover.y][rover.x] = '_';
   switch(rover.direction) {
     case 'N':
-      rover.y--;
-      positiveDirection = false;
+      //Checks if next move will be outside of map
       axis = 'y';
-      checkMap(axis, positiveDirection);
+      moveDirectionIsNegative = true;
+      if (checkEndOfMap(axis, moveDirectionIsNegative)) break;
+      //Checks if next move will colide with obstical
+      nextMove = map[rover.y - 1][rover.x];
+      if (checkIfMoveIsFree(nextMove)) {
+        rover.y--;
+      }
       break;
     case 'E':
-      rover.x++;
-      positiveDirection = true;
+    //Checks if next move will be outside of map
       axis = 'x';
-      checkMap(axis, positiveDirection);
+      moveDirectionIsNegative = false;
+      if (checkEndOfMap(axis, moveDirectionIsNegative)) break;
+      //Checks if next move will colide with obstical
+      nextMove = map[rover.y][rover.x + 1];
+      if (checkIfMoveIsFree(nextMove)) {
+        rover.x++;
+      }
       break;
     case 'S':
-      rover.y++;
-      positiveDirection = true;
+      //Checks if next move will be outside of map
       axis = 'y';
-      checkMap(axis, positiveDirection);
+      moveDirectionIsNegative = false;
+      if (checkEndOfMap(axis, moveDirectionIsNegative)) break;
+      //Checks if next move will colide with obstical
+      nextMove = map[rover.y + 1][rover.x];
+      if (checkIfMoveIsFree(nextMove)) {
+        rover.y++;
+      }
       break;
     case 'W':
-      rover.x--;
-      positiveDirection = false;
+      //Checks if next move will be outside of map
+      moveDirectionIsNegative = true;
       axis = 'x';
-      checkMap(axis, positiveDirection);
+      if (checkEndOfMap(axis, moveDirectionIsNegative)) break;
+      //Checks if next move will colide with obstical
+      nextMove = map[rover.y][rover.x - 1];
+      if (checkIfMoveIsFree(nextMove)) {
+        rover.x--;
+      }
       break;
     }
-    console.log(`X:${rover.x}, Y:${rover.y}`);
     rover.travelLog.push({x: rover.x, y: rover.y});
-    drawBoard(squareSide);
+    map[rover.y][rover.x] = 'R';
+    console.log(`X:${rover.x}, Y:${rover.y}`);
+    console.log(map);
 }
 
 function moveBackward(rover){
   console.log("moveBackward was called")
+  
   switch(rover.direction) {
     case 'N':
       rover.y++;
-      positiveDirection = true;
-      axis = 'y';
-      checkMap(axis, positiveDirection);
       break;
     case 'E':
       rover--;
-      positiveDirection = false;
-      axis = 'x';
-      checkMap(axis, positiveDirection);
       break;
     case 'S':
       rover.y--;
-      positiveDirection = false;
-      axis = 'y';
-      checkMap(axis, positiveDirection);
       break;
     case 'W':
       rover.x++;
-      positiveDirection = true;
-      axis = 'x';
-      checkMap(axis, positiveDirection);
       break;
     }
+    checkMap();
     console.log(`X:${rover.x}, Y:${rover.y}`);
     rover.travelLog.push({x: rover.x, y: rover.y});
-
-    drawBoard(squareSide);
 }
 
 function handleCommands(commands) {
@@ -173,3 +210,29 @@ function validateCommand(command) {
   }
 }
 
+
+
+document.addEventListener('keydown', (e) => {
+  switch(e.keyCode) {
+    case 37:
+     //left
+     rover.direction = 'W';
+      validateCommand('f');
+      break;
+    case 38:
+      //up
+      rover.direction = 'N';
+      validateCommand('f');
+      break;
+    case 39:
+      //right
+      rover.direction = 'E';
+      validateCommand('f');
+      break;
+    case 40:
+      //down
+      rover.direction = 'S';
+      validateCommand('f');
+      break;
+  }
+});

@@ -15,39 +15,46 @@ var ctx = canvas.getContext('2d');
 
 
 function drawBoard(squareSide) {
-    let i = 0;
-    let j = 0;
-    for (let x = 0; x <= boardSide; x += squareSide) {
+    const cols = 10;
+    const rows = 10;
+    for (let i = 0; i < cols; i++) {
+
 
         
-        for (let y = 0; y <= boardSide; y += squareSide) {
+        
 
-
-
-            let cellColor = '#df9f71';
-
-            if (i === rover.x && j === rover.y) {
-                cellColor = 'red';
-
-            }
+        for (let j = 0; j < rows; j++) {
+            let x = i * squareSide;
+            let y = j * squareSide;
             
+            cellColor = 'blue';
+
+           
+
+
+          
+
+
+
 
             ctx.beginPath();
-            ctx.lineWidth="4";
-            ctx.strokeStyle="black";
-            ctx.fillStyle= cellColor;
+            ctx.lineWidth = "4";
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = cellColor;
             ctx.fillRect(x, y, squareSide, squareSide);
             ctx.rect(x, y, squareSide, squareSide);
-            
+
             ctx.stroke();
 
-         
 
-            i++;
+
+
         }
-        //j++
+       
+
     }
     
+
 }
 
 drawBoard(squareSide);
