@@ -14,7 +14,7 @@ var ctx = canvas.getContext('2d');
 
 
 
-function drawBoard(squareSide) {
+function drawBoard() {
     const cols = 10;
     const rows = 10;
     for (let i = 0; i < cols; i++) {
@@ -27,11 +27,19 @@ function drawBoard(squareSide) {
             let x = i * squareSide;
             let y = j * squareSide;
             
-            cellColor = 'blue';
+            cellColor = '#8C1818';
 
            
 
+            if (map[j][i] === 'X')  {
 
+                cellColor = '#4C0D0D';
+            }
+
+            if (map[j][i] === 'R')  {
+
+                cellColor = '#59524E';
+            }
           
 
 

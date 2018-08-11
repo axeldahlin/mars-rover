@@ -1,7 +1,14 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+
 body {
     margin: 0;
     padding: 0;
     background: url(../images/background.jpg);
+    
 }
 
 #canvas-div {
@@ -12,5 +19,12 @@ body {
 
 #canvas {
     border: black 2px solid;
+
+}
+
+
+.instructions {
+    background-color: grey;
+  
 
 }

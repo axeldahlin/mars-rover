@@ -11,9 +11,9 @@ let rover = {
 // Map Goes Here
 // ======================
 const map = [
+  ['R', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-  ['_', '_', '_', '_', '_', 'X', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
@@ -22,6 +22,16 @@ const map = [
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_']
 ];
+
+function generateObstacles() {
+  for (let i = 0; i < 5; i++) {
+  const randomNum1 = Math.floor(Math.random() * 10);
+  const randomNum2 = Math.floor(Math.random() * 10);
+  map[randomNum1][randomNum2] = 'X';
+  }
+}
+
+generateObstacles();
 
 
 
@@ -157,6 +167,7 @@ function moveForward(rover){
     map[rover.y][rover.x] = 'R';
     console.log(`X:${rover.x}, Y:${rover.y}`);
     console.log(map);
+    drawBoard();
 }
 
 function moveBackward(rover){
