@@ -3,28 +3,22 @@
     padding: 0px;
 }
 
-
 body {
     margin: 0;
     padding: 0;
     background: url(../images/background.jpg);
-    
+    height: 100vh;
 }
 
 #canvas-div {
-    height: 100vh;
     text-align: center;
-
 }
 
 #canvas {
     border: black 2px solid;
-
 }
 
-
 .instructions {
-    background-color: grey;
-  
-
+    font-family: Verdana, Geneva, sans-serif;
+    color: #fff;
 }
