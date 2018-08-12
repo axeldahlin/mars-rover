@@ -1,19 +1,11 @@
-//Coded by Axel Dahlin
-// to controll any rover from the console: validateCommand(command, marsRover)
-//Commands:
-// f - forward
-// b- backward
-// l- turn left
-// r - turn right
-
 // marsRover Objects Goes Here
 // ======================
-let rover = {
+let roverOriginal = {
   direction: "N",
   x: 0,
   y: 0,
   travelLog: [],
-  letterOnMap: 'R'
+  letterOnMap: 'O'
 };
 
 let roverCloneOne = {
@@ -43,7 +35,7 @@ let roverCloneThree = {
 // Map Goes Here
 // ======================
 const map = [
-  ['R', '_', '_', '_', '_', '_', '_', '_', '_', 'C'],
+  ['O', '_', '_', '_', '_', '_', '_', '_', '_', 'C'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
   ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
@@ -283,23 +275,23 @@ document.addEventListener('keydown', (e) => {
   switch(e.keyCode) {
     case 37:
      //left
-      rover.direction = 'W';
-      validateCommand('f', rover);
+      roverOriginal.direction = 'W';
+      validateCommand('f', roverOriginal);
       break;
     case 38:
       //up
-      rover.direction = 'N';
-      validateCommand('f', rover);
+      roverOriginal.direction = 'N';
+      validateCommand('f', roverOriginal);
       break;
     case 39:
       //right
-      rover.direction = 'E';
-      validateCommand('f', rover);
+      roverOriginal.direction = 'E';
+      validateCommand('f', roverOriginal);
       break;
     case 40:
       //down
-      rover.direction = 'S';
-      validateCommand('f', rover);
+      roverOriginal.direction = 'S';
+      validateCommand('f', roverOriginal);
       break;
   }
 });

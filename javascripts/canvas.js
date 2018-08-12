@@ -19,7 +19,7 @@ function drawBoard() {
 
 			if (map[j][i] === 'X') cellColor = '#4C0D0D';
 	
-			if (map[j][i] === 'R') cellColor = '#7F7466';
+			if (map[j][i] === 'O') cellColor = '#7F7466';
 
 			if (map[j][i] === 'C') cellColor = '#C2B1A4';
 
